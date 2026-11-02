@@ -28,4 +28,4 @@ The jar is written to `build/libs/`.
 
 ## License
 
-All rights reserved. (Change this if you want to publish under another license.)
+All rights reserved.
