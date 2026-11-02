@@ -32,7 +32,7 @@ If you install [Mod Menu](https://modrinth.com/mod/modmenu), the same settings a
 
 ## Requirements
 
-- Minecraft **26.2**
+- Minecraft **1.21 to 1.21.11** or **26.1 to 26.3**
 - [Fabric Loader](https://fabricmc.net/use/) 0.19.5 or later
 - [Fabric API](https://modrinth.com/mod/fabric-api)
 - Optional: [Mod Menu](https://modrinth.com/mod/modmenu)
