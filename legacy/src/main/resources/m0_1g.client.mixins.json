@@ -2,11 +2,12 @@
 	"required": true,
 	"minVersion": "0.8",
 	"package": "com.multiplayergrid.mixin",
-	"compatibilityLevel": "JAVA_25",
+	"compatibilityLevel": "JAVA_21",
 	"client": [
 		"AbstractSelectionListMixin",
 		"OnlineServerEntryMixin",
-		"JoinMultiplayerScreenMixin"
+		"JoinMultiplayerScreenMixin",
+		"AbstractSelectionListInvoker"
 	],
 	"injectors": {
 		"defaultRequire": 1

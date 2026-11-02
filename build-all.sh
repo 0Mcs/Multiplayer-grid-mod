@@ -28,14 +28,25 @@ build_26 26.3 "~26.3"
 
 # 1.21.x line (currently verified against 1.21.11).
 build_121() {
-	local version="$1"
+	local version="$1" variant="$2"
 	echo "== 1.21.x: $version"
-	( cd legacy && ./gradlew "${GRADLE[@]}" -Pminecraft_version="$version" clean build )
+	( cd legacy && ./gradlew "${GRADLE[@]}" -Pminecraft_version="$version" -Pvariant="$variant" clean build )
 	mkdir -p "libs/$version"
 	cp "legacy/build/libs/Multiplayer Grid $version-0.1.0.jar" "libs/$version/"
 }
 
-build_121 1.21.11
+build_121 1.21 a
+build_121 1.21.1 a
+build_121 1.21.2 a2
+build_121 1.21.3 a2
+build_121 1.21.4 a2
+build_121 1.21.5 a2
+build_121 1.21.6 a3
+build_121 1.21.7 a3
+build_121 1.21.8 a3
+build_121 1.21.9 b
+build_121 1.21.10 b
+build_121 1.21.11 c
 
 echo "Done. Jars in libs/"
 find libs -name '*.jar' | sort

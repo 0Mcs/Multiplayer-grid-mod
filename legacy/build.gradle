@@ -11,6 +11,15 @@ repositories {
 	// for more information about repositories.
 }
 
+def variant = (project.findProperty('variant') ?: 'c').toString()
+def variantDir = switch (variant) {
+	case 'a' -> 'src/variantA/java'
+	case 'a2' -> 'src/variantA2/java'
+	case 'a3' -> 'src/variantA3/java'
+	case 'b' -> 'src/variantB/java'
+	default -> 'src/client/java'
+}
+
 loom {
 	splitEnvironmentSourceSets()
 
@@ -25,6 +34,8 @@ loom {
 base {
 	archivesName = "Multiplayer Grid ${project.minecraft_version}"
 }
+
+sourceSets.client.java.setSrcDirs([variantDir])
 
 dependencies {
 	// To change the versions see the gradle.properties file
