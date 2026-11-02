@@ -7,7 +7,7 @@
 	"authors": [
 		"Mac08s"
 	],
-	"license": "All-Rights-Reserved",
+	"license": "MIT",
 	"environment": "client",
 	"mixins": [
 		{

@@ -30,7 +30,7 @@ public abstract class JoinMultiplayerScreenMixin extends Screen {
 	@Inject(method = "init", at = @At("TAIL"))
 	private void mg$addPencil(final CallbackInfo ci) {
 		this.mg$grid = this.addRenderableWidget(
-			Button.builder(Component.translatable("multiplayer_grid.button"), button -> this.minecraft.setScreenAndShow(new CompactSettingsScreen(this, false)))
+			Button.builder(Component.translatableWithFallback("multiplayer_grid.button", "Grid"), button -> this.minecraft.setScreenAndShow(new CompactSettingsScreen(this, false)))
 				.size(BUTTON_WIDTH, BUTTON_HEIGHT)
 				.build()
 		);
@@ -72,21 +72,22 @@ public abstract class JoinMultiplayerScreenMixin extends Screen {
 			}
 		}
 
-		if (refresh == null) {
+		if (edit != null && delete != null && refresh != null && back != null) {
+			int shift = (BUTTON_WIDTH + BUTTON_GAP) / 2;
+			edit.setX(edit.getX() - shift);
+			for (Button button : List.of(delete, refresh, back)) {
+				button.setX(button.getX() + shift);
+			}
+
+			this.mg$grid.setX(edit.getX() + edit.getWidth() + BUTTON_GAP);
+			this.mg$grid.setY(edit.getY());
 			return;
 		}
 
-		if (edit != null && delete != null && back != null) {
-			int shift = (BUTTON_WIDTH + BUTTON_GAP) / 2;
-			for (Button button : List.of(edit, delete, refresh)) {
-				button.setX(button.getX() - shift);
-			}
-
-			back.setX(back.getX() + shift);
+		if (refresh != null) {
+			this.mg$grid.setX(refresh.getX() + refresh.getWidth() + BUTTON_GAP);
+			this.mg$grid.setY(refresh.getY());
 		}
-
-		this.mg$grid.setX(refresh.getX() + refresh.getWidth() + BUTTON_GAP);
-		this.mg$grid.setY(refresh.getY());
 	}
 
 	@Unique

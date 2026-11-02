@@ -47,4 +47,4 @@ cd legacy && ./gradlew build
 
 ## License
 
-All rights reserved.
+MIT. See [LICENSE](LICENSE).
