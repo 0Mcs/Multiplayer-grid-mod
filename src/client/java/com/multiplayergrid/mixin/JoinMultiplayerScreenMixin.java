@@ -30,7 +30,7 @@ public abstract class JoinMultiplayerScreenMixin extends Screen {
 	@Inject(method = "init", at = @At("TAIL"))
 	private void mg$addPencil(final CallbackInfo ci) {
 		this.mg$grid = this.addRenderableWidget(
-			Button.builder(Component.translatable("multiplayer_grid.button"), button -> this.minecraft.gui.setScreen(new CompactSettingsScreen(this, false)))
+			Button.builder(Component.translatable("multiplayer_grid.button"), button -> this.minecraft.setScreenAndShow(new CompactSettingsScreen(this, false)))
 				.size(BUTTON_WIDTH, BUTTON_HEIGHT)
 				.build()
 		);

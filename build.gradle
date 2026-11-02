@@ -1,7 +1,11 @@
 plugins {
 	id 'net.fabricmc.fabric-loom' version "${loom_version}"
-	id 'maven-publish'
 }
+
+def mc = (project.findProperty('mc') ?: '26.2').toString()
+def mcDep = (project.findProperty('mc_dep') ?: "~${mc}").toString()
+def javaRelease = (project.findProperty('java_release') ?: '25').toString()
+def legacy = project.hasProperty('legacy')
 
 repositories {
 	maven {
@@ -21,48 +25,45 @@ loom {
 	}
 }
 
-dependencies {
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
-	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
-
-	// Optional: Mod Menu config integration (compile-time only, not bundled).
-	compileOnly "com.terraformersmc:modmenu:21.0.0"
+if (legacy) {
+	sourceSets.client.java.setSrcDirs(['src/legacy/client/java'])
+	sourceSets.client.resources.setSrcDirs(['src/legacy/client/resources'])
+	sourceSets.main.java.setSrcDirs(['src/legacy/main/java'])
+	sourceSets.main.resources.setSrcDirs(['src/legacy/main/resources'])
 }
 
+dependencies {
+	if (legacy) {
+		mappings "net.fabricmc:yarn:${project.findProperty('yarn_mappings')}:v2"
+	}
+	minecraft "com.mojang:minecraft:${mc}"
+	implementation "net.fabricmc:fabric-loader:${loader_version}"
+
+	// Optional: Mod Menu config integration (compile-time only, never bundled).
+	compileOnly "com.terraformersmc:modmenu:${project.findProperty('modmenu_version') ?: '21.0.0'}"
+}
+
+def modVersion = project.version.toString()
+
 processResources {
-	def version = project.version
-	inputs.property "version", version
+	inputs.property "version", modVersion
+	inputs.property "mc_dep", mcDep
 
 	filesMatching("fabric.mod.json") {
-		expand "version": version
+		expand "version": modVersion, "mc_dep": mcDep
 	}
 }
 
 tasks.withType(JavaCompile).configureEach {
-	it.options.release = 25
+	it.options.release = javaRelease.toInteger()
 }
 
 base {
-	archivesName = "Multiplayer Grid 26.2"
+	archivesName = "Multiplayer Grid ${mc}"
 }
 
 java {
 	withSourcesJar()
-
-	sourceCompatibility = JavaVersion.VERSION_25
-	targetCompatibility = JavaVersion.VERSION_25
-}
-
-jar {
-	def projectName = project.name
-	inputs.property "projectName", projectName
-}
-
-publishing {
-	publications {
-		create("mavenJava", MavenPublication) {
-			from components.java
-		}
-	}
+	sourceCompatibility = JavaVersion.toVersion(javaRelease)
+	targetCompatibility = JavaVersion.toVersion(javaRelease)
 }

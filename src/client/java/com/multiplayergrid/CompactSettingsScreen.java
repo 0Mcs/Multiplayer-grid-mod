@@ -94,7 +94,7 @@ public class CompactSettingsScreen extends Screen {
 	@Override
 	public void onClose() {
 		CompactConfig.save();
-		this.minecraft.gui.setScreen(this.lastScreen);
+		this.minecraft.setScreenAndShow(this.lastScreen);
 	}
 
 	private Component columnsLabel() {

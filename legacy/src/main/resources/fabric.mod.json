@@ -1,0 +1,29 @@
+{
+	"schemaVersion": 1,
+	"id": "m0_1g",
+	"version": "${version}",
+	"name": "Multiplayer grid",
+	"description": "Shows your multiplayer server list as a compact grid of tiles. Each tile displays the server icon, name, ping and player count, and hovering over the icon reveals the MOTD. Use the pencil button next to Refresh to pick the columns and which details to show.",
+	"authors": [
+		"Mac08s"
+	],
+	"license": "All-Rights-Reserved",
+	"environment": "client",
+	"mixins": [
+		{
+			"config": "m0_1g.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"entrypoints": {
+		"client": [
+			"com.multiplayergrid.MultiplayerGridClient"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.19.5",
+		"minecraft": "${mc_dep}",
+		"java": ">=21"
+	},
+	"icon": "assets/m0_1g/icon.png"
+}
